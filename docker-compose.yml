@@ -1,0 +1,30 @@
+services:
+  mysql:
+    image: mysql:8.2
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: technical-test
+      MYSQL_ROOT_PASSWORD: admin123
+    volumes:
+      - ./mysql_db:/var/lib/mysql
+      - ./dump.sql:/docker-entrypoint-initdb.d/backup.sql
+    ports:
+      - '3306:3306'
+
+  app:
+    container_name: nest
+    build: .
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mysql
+    links:
+      - mysql
+
+volumes:
+  mysql_db:
+    external: false
