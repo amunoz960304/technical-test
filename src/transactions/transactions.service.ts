@@ -93,7 +93,7 @@ export class TransactionsService {
     );
 
     const balance = totalIncomes - totalExpenses;
-    const healthFinance = balance >= 0 ? HEALTHY : NOT_HEALTHY;
+    const healthFinance = totalIncomes > totalExpenses ? HEALTHY : NOT_HEALTHY;
 
     return {
       totalIncomes,
